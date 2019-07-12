@@ -1,0 +1,58 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+<div class="container-map" *ngIf="!loading">
+  <div class="controls">
+    <h2>Filtros</h2>
+    <div class="controls-actions">
+      <section class="checkbox-section">
+        <mat-checkbox *ngFor="let filter of filterTypes" class="checkbox-margin"
+                      (change)="changeValue(filter, $event)">
+          {{filter}}</mat-checkbox>
+      </section>
+      <mat-form-field>
+        <mat-label>Seleccione un Ingenios </mat-label>
+        <mat-select (selectionChange)="selectDropdown($event.value)">
+          <mat-option *ngFor="let ingenio of listIngenios" [value]="ingenio.id">
+            {{ingenio.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="btn" [disabled]="!activeBtnFilter"
+              (click)="onFilterByIngenio()">Filtrar</button>
+      <button mat-raised-button color="primary" class="btn" (click)="onAllTerrains()">Todo</button>
+    </div>
+  </div>
+  <div class="map" #map>
+    <agm-map id="map" [latitude]="lat" [longitude]="lng">
+      <agm-marker *ngFor="let data of completedSacks; let i = index" [latitude]="data.latitude"
+                  [longitude]="data.longitude" [iconUrl]="iconGreen" (mouseOver)="onMouseOver(infoWindow, $event)"
+                  (mouseOut)="onMouseOut(infoWindow, $event)" (markerClick)="markerClick(data)">
+        <agm-info-window [disableAutoPan]="true" #infoWindow>
+          <div style="color:rgb(8, 85, 25);">
+            Status: {{data.totalSacks}}/{{data.totalSacksDelivered}}
+          </div>
+        </agm-info-window>
+      </agm-marker>
+      <agm-marker *ngFor="let data of incompletedSacks; let i = index" [latitude]="data.latitude"
+                  [longitude]="data.longitude" [iconUrl]="iconVerde" (mouseOver)="onMouseOver(infoWindow, $event)"
+                  (mouseOut)="onMouseOut(infoWindow, $event)" (markerClick)="markerClick(data)">
+        <agm-info-window [disableAutoPan]="true" #infoWindow>
+          <div style="color:rgb(133, 10, 10);">
+            Status: {{data.totalSacks}}/{{data.totalSacksDelivered}}
+          </div>
+        </agm-info-window>
+      </agm-marker>
+    </agm-map>
+
+    <swal #modalInfoMarker>
+      <div *swalPartial class="infoSack">
+        <h4>{{infoClick.ingenioName}}</h4>
+        <h5>Sacos no entregados</h5>
+        <ul>
+          <li *ngFor="let sack of infoClick.sacksIncomplete">
+            {{sack.id}}
+          </li>
+        </ul>
+      </div>
+    </swal>
+  </div>
+</div>

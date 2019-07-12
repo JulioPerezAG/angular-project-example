@@ -1,0 +1,27 @@
+<table mat-table [dataSource]="data" class="mat-elevation-z8">
+
+  <mat-text-column name="id"></mat-text-column>
+
+  <mat-text-column name="formula" headerText="Descripción"></mat-text-column>
+
+  <mat-text-column name="orderId" headerText="Orden Id"></mat-text-column>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Fecha</th>
+    <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+  </ng-container>
+
+  <mat-text-column name="operatorId" headerText="Operador"></mat-text-column>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!--
+  date: number;
+  description: string;
+  id: string;
+  ingenioId: string;
+  operator: string;
+  orderId: string;
+-->

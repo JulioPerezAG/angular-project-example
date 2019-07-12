@@ -1,0 +1,32 @@
+<div fxLayout="column">
+  <mat-toolbar color="primary" fxLayout="column" fxLayoutAlign="center center">
+    <img src="../../../assets/images/logo.png">
+  </mat-toolbar>
+  <div fxFill fxLayoutAlign="center center">
+    <mat-card>
+      <mat-card-header>
+        Bienvendio
+      </mat-card-header>
+      <mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="space-evenly center" [formGroup]="form">
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="Password" formControlName="password" type="password">
+          </mat-form-field>
+          <mat-error *ngIf="form.errors">{{form.errors | json}}</mat-error>
+          {{form.errors | json}}
+        </div>
+      </mat-card-content>
+      <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+        <button mat-stroked-button color="primary" [disabled]="loading" (click)="login()">
+          <span *ngIf="!loading">Iniciar sesión</span>
+          <span><fa-icon *ngIf="loading" [icon]="loadingIcon" [spin]="true"></fa-icon></span>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<!-- sur 17 entre oriente 12 y 14 #648-->
