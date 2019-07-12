@@ -30,12 +30,11 @@ export class AuthService {
   }
 
   signIn(email, password): Observable<UserInterface> {
-    concat(from(this.auth.signInWithEmailAndPassword(email, password)).pipe(map(userCredential => ({uid: userCredential.user.uid}))),
-      from(this.auth.currentUser.getIdToken()).pipe(map(token => ({token})))).pipe(toArray(), map(([uid, token]) => ({...uid, ...token})));
-    return from(this.auth.signInWithEmailAndPassword(email, password)).pipe(map(user => {
-      console.log('User', user);
-      return user;
-    }), map(userCredential => ({uid: userCredential.user.uid, token: ''})));
+    // this.auth.signInWithEmailAndPassword(email, password).then(userCredential => userCredential.user.getIdToken().then())
+    return concat(from(this.auth.signInWithEmailAndPassword(email, password)).pipe(map(userCredential => ({uid: userCredential.user.uid}))),
+      from(this.auth.currentUser.getIdToken()).pipe(map(token => ({token})))).pipe(toArray())
+      .pipe(map(result => result.reduce((previousValue, currentValue) => ({...previousValue, ...currentValue}))),
+        map(result => result as UserInterface));
   }
 
   signOut(): Observable<void> {
