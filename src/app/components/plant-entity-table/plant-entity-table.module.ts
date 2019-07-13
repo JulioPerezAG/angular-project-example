@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { MatTableModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 
-import { EntranceTableComponent } from './entrance-table.component';
+import { PlantEntityTableComponent } from './plant-entity-table.component';
 
 @NgModule({
   declarations: [
-    EntranceTableComponent
+    PlantEntityTableComponent
   ],
   imports: [
     CommonModule,
     MatTableModule
   ],
   exports: [
-    EntranceTableComponent
+    PlantEntityTableComponent
   ]
 })
-export class EntranceTableModule {
+export class PlantEntityTableModule {
 }

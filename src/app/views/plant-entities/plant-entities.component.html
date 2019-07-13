@@ -1,1 +1,8 @@
-<app-entrance-table></app-entrance-table>
+<app-plant-entity-table *ngIf="!(isLoading | async) && (data | async).length" [data]="data | async"
+                        [plantType]="plantType | async"></app-plant-entity-table>
+<mat-spinner *ngIf="isLoading | async"></mat-spinner>
+<mat-card *ngIf="!(isLoading | async) && !(data | async).length" style="text-align: center">
+  <mat-icon>warning</mat-icon>
+  <br>
+  Aún no hay datos
+</mat-card>
