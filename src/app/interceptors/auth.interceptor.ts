@@ -8,12 +8,12 @@ import { mergeMap } from 'rxjs/operators';
 
 import { selectUserToken } from '../selectors/user.selectors';
 
-import { StateInterface } from '../models/state.interface';
+import { AppStateInterface } from '../models/app-state.interface';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private store: Store<StateInterface>) {
+  constructor(private store: Store<AppStateInterface>) {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

@@ -9,7 +9,7 @@ import { MapService } from '../../services/map.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { LoadTerrains } from '../../actions/terrain.actions';
 import { getTerrains } from '../../selectors/terrains.selector';
-import { StateInterface } from '../../models/state.interface';
+import { AppStateInterface } from '../../models/app-state.interface';
 
 @Component({
   selector: 'app-map',
@@ -17,7 +17,7 @@ import { StateInterface } from '../../models/state.interface';
 })
 export class MapComponent implements OnInit {
 
-  constructor(private store: Store<StateInterface>, private mapService: MapService,
+  constructor(private store: Store<AppStateInterface>, private mapService: MapService,
               private authService: AuthService) {
     this.mapService.getIngenios().subscribe(data => {
       this.listIngenios = data;

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { signIn } from '../../actions/login.actions';
 import { selectIsLoading, selectLoginErrors } from '../../selectors/login.selectors';
 
-import { StateInterface } from '../../models/state.interface';
+import { AppStateInterface } from '../../models/app-state.interface';
 import { StoreValidators } from '../../validators/store.validators';
 
 @Component({
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   loading: boolean;
 
-  constructor(formBuilder: FormBuilder, private store: Store<StateInterface>) {
+  constructor(formBuilder: FormBuilder, private store: Store<AppStateInterface>) {
     this.form = formBuilder.group({
       email: ['', [Validators.required, Validators.email],
         [StoreValidators.hasStoreErrors(this.store.pipe(select(selectLoginErrors)), 'signInErrors')]],

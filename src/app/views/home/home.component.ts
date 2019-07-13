@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { StateInterface } from '../../models/state.interface';
+import { AppStateInterface } from '../../models/app-state.interface';
 import { signOut } from '../../actions/login.actions';
 
 @Component({
@@ -12,7 +12,7 @@ import { signOut } from '../../actions/login.actions';
 })
 export class HomeComponent {
 
-  constructor(private store: Store<StateInterface>) {
+  constructor(private store: Store<AppStateInterface>) {
   }
 
   onSignOut() {

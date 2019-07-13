@@ -1,8 +1,11 @@
-import { StateInterface } from '../models/state.interface';
 import { createSelector } from '@ngrx/store';
 
-export const selectUser = (state: StateInterface) => state.user;
+import { AppStateInterface } from '../models/app-state.interface';
+
+export const selectUser = (state: AppStateInterface) => state.user;
 
 export const selectUserToken = createSelector(selectUser, state => state.token);
 
 export const selectUserRol = createSelector(selectUser, s1 => s1.rol);
+
+export const selectUserPlantId = createSelector(selectUser, s1 => s1.ingenioId);

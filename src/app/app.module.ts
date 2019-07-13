@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -11,11 +12,13 @@ import { AppComponent } from './app.component';
 
 import { metaReducers, reducers } from './reducers';
 
-import { AuthService } from './services/auth.service';
-
 import { LoginEffects } from './effects/login.effects';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './security/auth.interceptor';
+import { PlantEffects } from './effects/plant.effects';
+
+import { AuthService } from './services/auth.service';
+import { PlantService } from './services/plant.service';
+
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,7 @@ import { AuthInterceptor } from './security/auth.interceptor';
         strictActionImmutability: true
       }
     }),
-    EffectsModule.forRoot([LoginEffects]),
+    EffectsModule.forRoot([LoginEffects, PlantEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 20
     }),
@@ -40,6 +43,7 @@ import { AuthInterceptor } from './security/auth.interceptor';
   ],
   providers: [
     AuthService,
+    PlantService,
     {multi: true, useClass: AuthInterceptor, provide: HTTP_INTERCEPTORS}
   ],
   bootstrap: [AppComponent]

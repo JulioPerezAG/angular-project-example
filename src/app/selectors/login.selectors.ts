@@ -1,8 +1,8 @@
 import { createSelector } from '@ngrx/store';
 
-import { StateInterface } from '../models/state.interface';
+import { AppStateInterface } from '../models/app-state.interface';
 
-export const selectLogin = (state: StateInterface) => state.login;
+export const selectLogin = (state: AppStateInterface) => state.login;
 
 export const selectIsLoading = createSelector(selectLogin, state => state.loading);
 

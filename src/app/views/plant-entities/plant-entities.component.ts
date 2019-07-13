@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { PlantService } from '../../services/plant.service';
+
+import { Store } from '@ngrx/store';
+
+import { AppStateInterface } from '../../models/app-state.interface';
 
 @Component({
   selector: 'app-plant-entities',
   templateUrl: './plant-entities.component.html'
 })
 export class PlantEntitiesComponent {
-  constructor(private plantService: PlantService) {}
 
-
+  constructor(private store: Store<AppStateInterface>) {
+  }
 }
