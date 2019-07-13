@@ -27,6 +27,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@ngrx/effects": "^8.1.0",
+    "@ngrx/entity": "^8.1.0",
     "@ngrx/store": "^8.1.0",
     "@ngrx/store-devtools": "^8.1.0",
     "@sweetalert2/ngx-sweetalert2": "^5.1.0",

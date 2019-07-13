@@ -5,23 +5,33 @@
   <div fxFill fxLayoutAlign="center center">
     <mat-card>
       <mat-card-header>
-        Bienvendio
+        Bienvenido
       </mat-card-header>
       <mat-card-content>
         <div fxLayout="column" fxLayoutAlign="space-evenly center" [formGroup]="form">
           <mat-form-field>
             <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="form.controls.email?.errors?.signInErrors">
+              {{form.controls.email.errors.signInErrors}}
+            </mat-error>
+            <mat-error *ngIf="form.controls.email?.errors?.email">
+              El formato del correo es invalido
+            </mat-error>
+            <mat-error *ngIf="form.controls.email?.errors?.required">
+              El correo es necesario
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field>
             <input matInput placeholder="Password" formControlName="password" type="password">
+            <mat-error *ngIf="form.controls.password?.errors?.required">
+              La contraseña es necesaria
+            </mat-error>
           </mat-form-field>
-          <mat-error *ngIf="form.errors">{{form.errors | json}}</mat-error>
-          {{form.errors | json}}
         </div>
       </mat-card-content>
       <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-        <button mat-stroked-button color="primary" [disabled]="loading" (click)="login()">
+        <button mat-stroked-button color="primary" [disabled]="loading || form.status === 'INVALID'" (click)="login()">
           <span *ngIf="!loading">Iniciar sesión</span>
           <span><fa-icon *ngIf="loading" [icon]="loadingIcon" [spin]="true"></fa-icon></span>
         </button>

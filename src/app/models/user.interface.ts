@@ -1,4 +1,7 @@
 export interface UserInterface {
-  uid: string;
-  token: string;
+  email?: string;
+  ingenioId?: string;
+  rol?: string;
+  token?: string;
+  uid?: string;
 }

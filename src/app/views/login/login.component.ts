@@ -28,21 +28,16 @@ export class LoginComponent implements OnInit {
 
   loading: boolean;
 
-  errors: Observable<string>;
-
   constructor(formBuilder: FormBuilder, private store: Store<StateInterface>) {
     this.form = formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email],
+        [StoreValidators.hasStoreErrors(this.store.pipe(select(selectLoginErrors)), 'signInErrors')]],
       password: ['', Validators.required]
-    }, {
-      asyncValidators: StoreValidators.hasStoreErrors(this.store.pipe(select(selectLoginErrors)), 'signInErrors')
     });
   }
 
   ngOnInit(): void {
     this.store.pipe(select(selectIsLoading)).subscribe(isLoading => this.loading = isLoading);
-    this.errors = this.store.pipe(select(selectLoginErrors));
-    this.form.statusChanges.subscribe(() => console.log(this.form));
   }
 
   login() {

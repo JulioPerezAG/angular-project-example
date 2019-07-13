@@ -3,16 +3,17 @@ import { Router } from '@angular/router';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { of } from 'rxjs';
+import { from, of } from 'rxjs';
 import { catchError, exhaustMap, switchMap, tap } from 'rxjs/operators';
 
-import { finishLoad, signIn, signInFailure, signInSuccess, signOut, signOutSuccess } from '../actions/login.actions';
+import { finishLoad, fireAuthSuccess, signIn, signInFailure, signInSuccess, signOut, signOutSuccess } from '../actions/login.actions';
 import { clearUser, loadUser } from '../actions/user.actions';
 
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class LoginEffects {
+
   constructor(private actions$: Actions, private router: Router, private authService: AuthService) {
   }
 
@@ -20,18 +21,25 @@ export class LoginEffects {
     this.actions$.pipe(
       ofType(signIn),
       exhaustMap(action => this.authService.signIn(action.email, action.password).pipe(
-        switchMap(user => [loadUser(user), finishLoad(), signInSuccess()]),
-        catchError(reason => {
-          console.log(reason);
-          return of(signInFailure({reason}));
-        })
-      ))));
+        switchMap(({uid, token}) => [loadUser({uid, token}), fireAuthSuccess({uid, token})]),
+        catchError(reason => of(finishLoad(), signInFailure({reason})))))));
+
+  fireAuthSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fireAuthSuccess),
+      exhaustMap(action => this.authService.getUserData(action.uid).pipe(
+        switchMap(({email, ingenioId, rol}) =>
+          [loadUser({email, ingenioId, rol}), signInSuccess()]),
+        catchError(reason => of(finishLoad(), signInFailure({reason})))))));
 
   signInSuccessEffect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(signInSuccess),
-      tap(_ => this.router.navigate(['home']))
-    ), {dispatch: false});
+      exhaustMap(_ => from(this.router.navigate(['home']))
+        .pipe(
+          switchMap(result => result ? [finishLoad()] : [finishLoad(), signInFailure({reason: 'User with invalid roles'})]),
+          catchError(reason => of(finishLoad(), signInFailure({reason})))))
+    ));
 
   signOutEffect$ = createEffect(() =>
     this.actions$.pipe(

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { concat, from, Observable } from 'rxjs';
-import { map, toArray } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
 
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
@@ -10,6 +9,7 @@ import 'firebase/auth';
 import { environment } from '../../environments/environment';
 
 import { UserInterface } from '../models/user.interface';
+import { map } from 'rxjs/operators';
 import Auth = firebase.auth.Auth;
 
 @Injectable()
@@ -30,18 +30,16 @@ export class AuthService {
   }
 
   signIn(email, password): Observable<UserInterface> {
-    // this.auth.signInWithEmailAndPassword(email, password).then(userCredential => userCredential.user.getIdToken().then())
-    return concat(from(this.auth.signInWithEmailAndPassword(email, password)).pipe(map(userCredential => ({uid: userCredential.user.uid}))),
-      from(this.auth.currentUser.getIdToken()).pipe(map(token => ({token})))).pipe(toArray())
-      .pipe(map(result => result.reduce((previousValue, currentValue) => ({...previousValue, ...currentValue}))),
-        map(result => result as UserInterface));
+    return from(this.auth.signInWithEmailAndPassword(email, password)
+      .then(userCredential => Promise.all([Promise.resolve(userCredential.user.uid), userCredential.user.getIdToken()])))
+      .pipe(map(([uid, token]) => ({uid, token})));
   }
 
   signOut(): Observable<void> {
     return from(this.auth.signOut());
   }
 
-  getUserData(uid: string) {
-    this.httpClient.get(`${this.basePath}/${uid}`);
+  getUserData(uid: string): Observable<UserInterface> {
+    return this.httpClient.get<UserInterface>(`${this.basePath}/${uid}`);
   }
 }

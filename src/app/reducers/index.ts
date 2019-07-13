@@ -11,5 +11,4 @@ export const reducers: ActionReducerMap<StateInterface> = {
   terrains: terrainReducer
 };
 
-
 export const metaReducers: MetaReducer<StateInterface>[] = !environment.production ? [] : [];

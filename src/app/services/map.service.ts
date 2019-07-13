@@ -37,12 +37,6 @@ export class MapService {
   }
 
   getTerrains(): Observable<TerrainInterface[]> {
-    const httpOptions: HttpHeaders = new HttpHeaders(
-      {
-        Authorization: localStorage.getItem('token'),
-        'Content-Type': 'application/json'
-      }
-    );
     return this.http.get<TerrainInterface[]>(`${this.api}/sumagro-app/ingenios/parcelas`);
   }
 
@@ -57,15 +51,8 @@ export class MapService {
   }
 
   getIngenioById(idIngenio: string): Promise<any> {
-    console.log(`ID: ${idIngenio}`);
-    const httpOptions: HttpHeaders = new HttpHeaders(
-      {
-        Authorization: localStorage.getItem('token'),
-        'Content-Type': 'application/json'
-      }
-    );
     return new Promise((resolve, reject) => {
-      this.http.get<any>(`${this.api}/sumagro-app/ingenio/${idIngenio}`, {headers: httpOptions}).subscribe(data => {
+      this.http.get<any>(`${this.api}/sumagro-app/ingenio/${idIngenio}`).subscribe(data => {
         resolve(data);
       });
     });

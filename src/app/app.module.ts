@@ -14,7 +14,8 @@ import { metaReducers, reducers } from './reducers';
 import { AuthService } from './services/auth.service';
 
 import { LoginEffects } from './effects/login.effects';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './security/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    {multi: true, useClass: AuthInterceptor, provide: HTTP_INTERCEPTORS}
   ],
   bootstrap: [AppComponent]
 })
