@@ -33,7 +33,7 @@ $sumagro-plant-admin-theme: mat-light-theme($sumagro-plant-admin-primary, $sumag
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-tr:hover {
+.mat-rows:hover {
   background: #777;
 }
 

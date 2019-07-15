@@ -19,6 +19,7 @@ import { AuthService } from './services/auth.service';
 import { PlantService } from './services/plant.service';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { TerrainEffects } from './effects/terrains.effects';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
         strictActionImmutability: true
       }
     }),
-    EffectsModule.forRoot([LoginEffects, PlantEffects]),
+    EffectsModule.forRoot([LoginEffects, PlantEffects, TerrainEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 20
     }),

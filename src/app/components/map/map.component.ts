@@ -13,15 +13,15 @@ import { AppStateInterface } from '../../models/app-state.interface';
 
 @Component({
   selector: 'app-map',
-  templateUrl: './map.component.html'
+  templateUrl: './map.component.html',
+  styleUrls: [
+    './map.component.scss'
+  ]
 })
 export class MapComponent implements OnInit {
 
   constructor(private store: Store<AppStateInterface>, private mapService: MapService,
               private authService: AuthService) {
-    this.mapService.getIngenios().subscribe(data => {
-      this.listIngenios = data;
-    });
   }
 
   // Opciones de filtrado
@@ -74,17 +74,21 @@ export class MapComponent implements OnInit {
 
   infoClick: SackInformationInterface;
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.mapService.getIngenios().subscribe(data => {
+      this.listIngenios = data;
+      console.log(data);
+    });
     /**
      * Al iniciar el componente dispara una accion para cargar los datos del servicio
      * a un almacenamiento local
      */
-    await this.store.dispatch(new LoadTerrains());
+    this.store.dispatch(new LoadTerrains());
     // this.pointsTerrains$ = this.store.select(getTerrains);
     /**
      * Se guarda la info y se suscribe uno para obtener la informacion
      */
-    await this.store.select(getTerrains).subscribe(data => {
+    this.store.select(getTerrains).subscribe(data => {
       // debugger;
 
       if (data.length != 0) {
@@ -145,6 +149,7 @@ export class MapComponent implements OnInit {
         });
         this.infoSacksCopy = this.infoSacks;
       } else {
+        console.log('Carga perpetua');
         this.loading = true;
       }
     });

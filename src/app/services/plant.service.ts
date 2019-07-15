@@ -17,8 +17,8 @@ export class PlantService {
 
   getPlant(type: PlantType, plantId: string, page = '0', pageSize = '10'): Observable<{ entities: PlantEntityType[], total: number }> {
     return this.httpClient.get<PlantEntityType[]>(`${this.basePath}/${type}/${plantId}`, {
-      params: {page, pageSize},
+      params: {page, peer_page: pageSize},
       observe: 'response'
-    }).pipe(map(response => ({entities: response.body, total: Number.parseFloat(response.headers.get('X-Total-Count'))})));
+    }).pipe(map(response => ({entities: response.body, total: Number.parseFloat(response.headers.get('x-total-count'))})));
   }
 }

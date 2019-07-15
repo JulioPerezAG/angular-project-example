@@ -3,6 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { PlantEntityType } from '../models/plant-entity.type';
 import { PaginationInterface } from '../models/pagination.interface';
 import { PlantType } from '../models/plant.type';
+import { PageEvent } from '@angular/material';
 
 export const LOAD_PLANT_TYPE = '[PLANT] Load Plant Type';
 
@@ -26,4 +27,4 @@ export const changePageSize = createAction(CHANGE_PAGE_SIZE, props<{ pageSize }>
 
 export const loadPlantEntities = createAction(LOAD_PLANT_ENTITIES, props<{ entities: PlantEntityType[], total: number }>());
 
-export const loadPlantPagination = createAction(LOAD_PLANT_PAGINATION, props<{ pagination: PaginationInterface }>());
+export const loadPlantPagination = createAction(LOAD_PLANT_PAGINATION, props<{ pagination: PaginationInterface | PageEvent }>());

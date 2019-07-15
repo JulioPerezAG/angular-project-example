@@ -33,7 +33,7 @@
         </agm-info-window>
       </agm-marker>
       <agm-marker *ngFor="let data of incompletedSacks; let i = index" [latitude]="data.latitude"
-                  [longitude]="data.longitude" [iconUrl]="iconVerde" (mouseOver)="onMouseOver(infoWindow, $event)"
+                  [longitude]="data.longitude" [iconUrl]="iconGreen" (mouseOver)="onMouseOver(infoWindow, $event)"
                   (mouseOut)="onMouseOut(infoWindow, $event)" (markerClick)="markerClick(data)">
         <agm-info-window [disableAutoPan]="true" #infoWindow>
           <div style="color:rgb(133, 10, 10);">

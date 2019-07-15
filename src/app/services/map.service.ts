@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
+
 import { CoordinatesInterface } from '../models/coordinates.interface';
 import { TerrainInterface } from '../models/terrain.interface';
 
@@ -31,7 +33,7 @@ export class MapService {
       }
     ];
 
-    return Observable.create(observer => {
+    return new Observable(observer => {
       observer.next(pointsTest);
     });
   }

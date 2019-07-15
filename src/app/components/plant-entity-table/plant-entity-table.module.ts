@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatTableModule } from '@angular/material';
+import { MatPaginatorModule, MatTableModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 
 import { PlantEntityTableComponent } from './plant-entity-table.component';
@@ -10,7 +10,8 @@ import { PlantEntityTableComponent } from './plant-entity-table.component';
   ],
   imports: [
     CommonModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
   ],
   exports: [
     PlantEntityTableComponent

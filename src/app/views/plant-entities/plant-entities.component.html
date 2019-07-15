@@ -1,5 +1,6 @@
 <app-plant-entity-table *ngIf="!(isLoading | async) && (data | async).length" [data]="data | async"
-                        [plantType]="plantType | async"></app-plant-entity-table>
+                        [plantType]="plantType | async" [pagination]="pagination | async"
+                        (pageChange)="onPageChange($event)"></app-plant-entity-table>
 <mat-spinner *ngIf="isLoading | async"></mat-spinner>
 <mat-card *ngIf="!(isLoading | async) && !(data | async).length" style="text-align: center">
   <mat-icon>warning</mat-icon>

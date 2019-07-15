@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { PlantType } from '../../models/plant.type';
 import { ColumnDefinitionInterface } from '../../models/column-definition.interface';
+import { PaginationInterface } from '../../models/pagination.interface';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-plant-entity-table',
@@ -15,6 +17,10 @@ export class PlantEntityTableComponent {
     this.displayedColumns = this.columnsDefinition[plantType].map(value => value.propertyName);
     this.currentColumnDefinition = this.columnsDefinition[plantType];
   }
+
+  @Input() pagination: PaginationInterface;
+
+  @Output() pageChange: EventEmitter<PageEvent>;
 
   displayedColumns: string[] = [];
 
@@ -66,4 +72,12 @@ export class PlantEntityTableComponent {
     inventory: this.inventoryColumnDefinition,
     intransit: this.intransitColumnDefiniton
   };
+
+  constructor() {
+    this.pageChange = new EventEmitter();
+  }
+
+  onPageChange(change: PageEvent) {
+    this.pageChange.emit(change);
+  }
 }
