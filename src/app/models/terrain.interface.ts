@@ -1,6 +1,6 @@
 export interface TerrainInterface {
   clave: string;
-  latidud: string;
+  latitud: string;
   longitud: string;
   sacks: any;
   ingenioId: string;

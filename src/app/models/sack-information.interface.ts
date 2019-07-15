@@ -1,4 +1,5 @@
 export interface SackInformationInterface {
+  parcela:string;
   longitude: number;
   latitude: number;
   colorStatus: string;

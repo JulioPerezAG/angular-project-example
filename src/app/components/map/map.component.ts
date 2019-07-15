@@ -59,19 +59,24 @@ export class MapComponent implements OnInit {
 
 
   // Objetos con informacion de los marcadores para el mapa
-
+colores ={
   // Completados
-  iconGreen = {
+  iconGreen:{
     url: '../../../assets/images/MapGreen.png',
     scaledSize: {width: 25, height: 30}
-  };
+  },
 
   // Incompletos
-  iconRed = {
+  iconRed :{
     url: '../../../assets/images/MapRed.png',
     scaledSize: {width: 25, height: 30}
-  };
+  },
 
+  iconBlue : {
+    url: '../../../assets/images/MapBlue.png',
+    scaledSize: {width: 25, height: 30}
+  }
+}
   infoClick: SackInformationInterface;
 
   ngOnInit() {
@@ -95,11 +100,12 @@ export class MapComponent implements OnInit {
         this.loading = false;
         // console.log("Terrenos: ", data);
         // Se genera un objeto bajo un modelo especifico que ayudara en la iteracion y muestreo de info en la vista
-        this.pointsTerrains = data;
+        this.pointsTerrains = data
 
         // Se mapea objeto por objeto del arreglo general de parcelas/terrenos
         this.pointsTerrains.map(terrain => {
-          const objeto: SackInformationInterface = {
+          let objeto: SackInformationInterface =
+          { parcela: '',
             latitude: 0,
             longitude: 0,
             colorStatus: '',
@@ -109,38 +115,50 @@ export class MapComponent implements OnInit {
             ingenioName: '',
             sacks: [],
             sacksIncomplete: []
-          };
-          // console.log("Terreno: ",terrain.latidud);
-          objeto.latitude = parseFloat(terrain.latidud);
+          }
+          //console.log("Terreno: ",terrain.latidud);
+          objeto.latitude = parseFloat(terrain.latitud);
           objeto.longitude = parseFloat(terrain.longitud);
           objeto.ingenioId = terrain.ingenioId;
+          objeto.parcela = terrain.clave;
           objeto.ingenioName = terrain.ingenioName;
           //
           let sacks: SackInterface[];
-          // Conversion del objeto de objetos a un arreglo para mejor manipulacion
-          if (terrain.sacks !== undefined) {
+          //Conversion del objeto de objetos a un arreglo para mejor manipulacion
+          if (terrain.sacks != undefined) {
             sacks = Object.keys(terrain.sacks).map(key => terrain.sacks[key]);
           } else {
             sacks = [];
           }
           // Se obtinen costales completados
           // let completed: any[] = sacks.map(sack => { if(sack.used == true){ return sack }});
-          const completed: any = [];
-          const incompleted: any = [];
+          let completed: any = [];
+          let incompleted: any = [];
+          let aplicatedInPlot:boolean = true;
           sacks.forEach(sack => {
             if (sack.used) {
               completed.push(sack);
+              if(sack.inPlot==false){
+                aplicatedInPlot = false;
+              }
             } else {
               incompleted.push(sack);
             }
-          });
+          })
           // Comparacion de totales para saber la diferencia
-          if (sacks.length === completed.length) {
-            objeto.colorStatus = 'green';
+          if (sacks.length === completed.length && aplicatedInPlot) {
+            
+            objeto.colorStatus = 'Green';
+
             objeto.totalSacks = sacks.length;
             objeto.totalSacksDelivered = completed.length;
-          } else {
-            objeto.colorStatus = 'red';
+          } else if(sacks.length === completed.length && !aplicatedInPlot){
+            objeto.colorStatus = 'Blue';
+
+            objeto.totalSacks = sacks.length;
+            objeto.totalSacksDelivered = completed.length;
+          }else {
+            objeto.colorStatus = 'Red';
           }
           objeto.sacks = completed;
           objeto.sacksIncomplete = incompleted;
@@ -148,8 +166,8 @@ export class MapComponent implements OnInit {
           this.infoSacks.push(objeto);
         });
         this.infoSacksCopy = this.infoSacks;
-      } else {
-        console.log('Carga perpetua');
+      }
+      else {
         this.loading = true;
       }
     });
@@ -181,10 +199,10 @@ export class MapComponent implements OnInit {
    */
   changeValue(filter: string, evt): void {
     if (evt.checked && filter === 'Completos') {
-      this.completedSacks = this.infoSacksCopy.filter(c => c.colorStatus === 'green');
+      this.completedSacks = this.infoSacksCopy.filter(c => c.colorStatus === 'Green' || c.colorStatus == 'Blue');
     } else {
       if (evt.checked && filter === 'Incompletos') {
-        this.incompletedSacks = this.infoSacksCopy.filter(c => c.colorStatus === 'red');
+        this.incompletedSacks = this.infoSacksCopy.filter(c => c.colorStatus === 'Red');
       } else {
         if (filter === 'Completos') {
           this.completedSacks = [];
@@ -202,7 +220,7 @@ export class MapComponent implements OnInit {
 
   onFilterByIngenio() {
     this.infoSacksCopy = this.infoSacksCopy.filter(sack => {
-      if (sack.ingenioId === this.idIngenio || sack.ingenioId === 'IngenioId1') { // borrar la ultima parte del || ya que solo es prueba
+      if (sack.ingenioId === this.idIngenio ) { // borrar la ultima parte del || ya que solo es prueba
         return sack;
       }
     });

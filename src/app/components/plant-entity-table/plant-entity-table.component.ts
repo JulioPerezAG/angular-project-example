@@ -40,7 +40,7 @@ export class PlantEntityTableComponent {
   outputColumnDefinition: ColumnDefinitionInterface[] = [
     {displayedName: 'Id', propertyName: 'id'},
     {displayedName: 'Formula', propertyName: 'description'},
-    {displayedName: 'User Id', propertyName: 'userId'}
+    {displayedName: 'Usuario', propertyName: 'userId'}
   ];
 
   aplicatedColumnDefinition: ColumnDefinitionInterface[] = [

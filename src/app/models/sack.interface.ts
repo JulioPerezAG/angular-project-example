@@ -6,4 +6,5 @@ export interface SackInterface {
   id: string
   used: boolean;
   userId: string;
+  inPlot:boolean;
 }
