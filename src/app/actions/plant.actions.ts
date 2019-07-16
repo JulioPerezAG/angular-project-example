@@ -1,9 +1,10 @@
+import { PageEvent } from '@angular/material';
+
 import { createAction, props } from '@ngrx/store';
 
 import { PlantEntityType } from '../models/plant-entity.type';
 import { PaginationInterface } from '../models/pagination.interface';
 import { PlantType } from '../models/plant.type';
-import { PageEvent } from '@angular/material';
 
 export const LOAD_PLANT_TYPE = '[PLANT] Load Plant Type';
 

@@ -1,35 +1,30 @@
-import { AllTerrainActions, TerrainActions } from '../actions/terrain.actions';
+import { createReducer, on } from '@ngrx/store';
+
 import { TerrainScreenInterface } from '../models/terrain-screen.interface';
 
-export const terrainReducer = (state: TerrainScreenInterface = {
-                                 isLoading: false,
-                                 terrains: [],
-                                 msg_error: ''
-                               },
-                               action: AllTerrainActions): TerrainScreenInterface => {
-  switch (action.type) {
-    case TerrainActions.LOAD_TERRAINS:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case TerrainActions.LOAD_TERRAINS_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        terrains: action.payload
-      };
-    case TerrainActions.LOAD_ERROR:
-      return {
-        ...state,
-        isLoading: false,
-        msg_error: action.payload
-      };
-    case TerrainActions.CLEAR_ALL:
-      return {
-        ...state,
-        isLoading: false,
-        terrains: []
-      };
-  }
-};
+import { clearAll, loadError, loadTerrains, loadTerrainSuccess } from '../actions/terrain.actions';
+
+export const terrainReducer = createReducer<TerrainScreenInterface>({
+    isLoading: false,
+    terrains: [],
+    msg_error: ''
+  },
+  on(loadTerrains, state => ({
+    ...state,
+    isLoading: true
+  })),
+  on(loadTerrainSuccess, (state, {terrains}) => ({
+    ...state,
+    isLoading: false,
+    terrains
+  })),
+  on(loadError, (state, {error}) => ({
+    ...state,
+    isLoading: false,
+    msg_error: error
+  })),
+  on(clearAll, state => ({
+    ...state,
+    isLoading: false,
+    terrains: []
+  })));

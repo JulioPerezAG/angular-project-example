@@ -1,39 +1,19 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export enum TerrainActions {
-  LOAD_TERRAINS = '[Terrain] Load Terrains',
-  LOAD_TERRAINS_SUCCESS = '[Terrain] Load Terrains Success',
-  LOAD_ERROR = '[Terrain] Load Error',
-  CLEAR_ALL = '[Terrain] Clear All'
-}
+import { TerrainInterface } from '../models/terrain.interface';
 
-export class LoadTerrains implements Action {
-  readonly type = TerrainActions.LOAD_TERRAINS;
+export const LOAD_TERRAINS = '[TERRAIN] Load Terrains';
 
-  constructor(public payload: string) {
-  }
-}
+export const LOAD_TERRAINS_SUCCESS = '[Terrain] Load Terrains Success';
 
-export class LoadTerrainSuccess implements Action {
-  readonly type = TerrainActions.LOAD_TERRAINS_SUCCESS;
+export const LOAD_ERROR = '[Terrain] Load Error';
 
-  constructor(public payload: any) {
-  }
-}
+export const CLEAR_ALL = '[Terrain] Clear All';
 
-export class LoadError implements Action {
-  readonly type = TerrainActions.LOAD_ERROR;
+export const loadTerrains = createAction(LOAD_TERRAINS, props<{ payload: string }>());
 
-  constructor(public payload: any) {
-  }
-}
+export const loadTerrainSuccess = createAction(LOAD_TERRAINS_SUCCESS, props<{ terrains: TerrainInterface[] }>());
 
-export class ClearAll implements Action {
-  readonly type = TerrainActions.CLEAR_ALL;
-}
+export const loadError = createAction(LOAD_ERROR, props<{ error: any }>());
 
-export type AllTerrainActions =
-  | LoadTerrains
-  | LoadTerrainSuccess
-  | LoadError
-  | ClearAll;
+export const clearAll = createAction(CLEAR_ALL);

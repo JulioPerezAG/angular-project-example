@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { AuthService } from '../../services/auth.service';
 import { MapService } from '../../services/map.service';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-import { LoadTerrains } from '../../actions/terrain.actions';
+import { loadTerrains } from '../../actions/terrain.actions';
 import { getTerrains } from '../../selectors/terrains.selector';
 import { AppStateInterface } from '../../models/app-state.interface';
 import { selectUserPlantId } from 'src/app/selectors/user.selectors';
@@ -60,24 +60,24 @@ export class MapComponent implements OnInit {
 
 
   // Objetos con informacion de los marcadores para el mapa
-colores ={
-  // Completados
-  iconGreen:{
-    url: '../../../assets/images/MapGreen.png',
-    scaledSize: {width: 25, height: 30}
-  },
+  colores = {
+    // Completados
+    iconGreen: {
+      url: '../../../assets/images/MapGreen.png',
+      scaledSize: {width: 25, height: 30}
+    },
 
-  // Incompletos
-  iconRed :{
-    url: '../../../assets/images/MapRed.png',
-    scaledSize: {width: 25, height: 30}
-  },
+    // Incompletos
+    iconRed: {
+      url: '../../../assets/images/MapRed.png',
+      scaledSize: {width: 25, height: 30}
+    },
 
-  iconBlue : {
-    url: '../../../assets/images/MapBlue.png',
-    scaledSize: {width: 25, height: 30}
-  }
-}
+    iconBlue: {
+      url: '../../../assets/images/MapBlue.png',
+      scaledSize: {width: 25, height: 30}
+    }
+  };
   infoClick: SackInformationInterface;
 
   ngOnInit() {
@@ -86,34 +86,35 @@ colores ={
      * a un almacenamiento local
      */
 
-    this.store.select(selectUserPlantId).subscribe(async (data)=> {
-      await this.store.dispatch(new LoadTerrains(data));
-    })
+    this.store.select(selectUserPlantId).subscribe(async (payload) => {
+      await this.store.dispatch(loadTerrains({payload}));
+    });
 
     this.store.select(getTerrains).subscribe(data => {
       // debugger;
 
       if (data.length != 0) {
-        console.log("getTerrenos: ",data)
+        console.log('getTerrenos: ', data);
         this.loading = false;
         // console.log("Terrenos: ", data);
         // Se genera un objeto bajo un modelo especifico que ayudara en la iteracion y muestreo de info en la vista
-        this.pointsTerrains = data
+        this.pointsTerrains = data;
 
         // Se mapea objeto por objeto del arreglo general de parcelas/terrenos
         this.pointsTerrains.map(terrain => {
           let objeto: SackInformationInterface =
-          { parcela: '',
-            latitude: 0,
-            longitude: 0,
-            colorStatus: '',
-            totalSacks: 0,
-            totalSacksDelivered: 0,
-            ingenioId: '',
-            ingenioName: '',
-            sacks: [],
-            sacksIncomplete: []
-          }
+            {
+              parcela: '',
+              latitude: 0,
+              longitude: 0,
+              colorStatus: '',
+              totalSacks: 0,
+              totalSacksDelivered: 0,
+              ingenioId: '',
+              ingenioName: '',
+              sacks: [],
+              sacksIncomplete: []
+            };
           //console.log("Terreno: ",terrain.latidud);
           objeto.latitude = parseFloat(terrain.latitud);
           objeto.longitude = parseFloat(terrain.longitud);
@@ -132,30 +133,30 @@ colores ={
           // let completed: any[] = sacks.map(sack => { if(sack.used == true){ return sack }});
           let completed: any = [];
           let incompleted: any = [];
-          let aplicatedInPlot:boolean = true;
+          let aplicatedInPlot: boolean = true;
           sacks.forEach(sack => {
             if (sack.used) {
               completed.push(sack);
-              if(sack.inPlot==false){
+              if (sack.inPlot == false) {
                 aplicatedInPlot = false;
               }
             } else {
               incompleted.push(sack);
             }
-          })
+          });
           // Comparacion de totales para saber la diferencia
           if (sacks.length === completed.length && aplicatedInPlot) {
-            
+
             objeto.colorStatus = 'Green';
 
             objeto.totalSacks = sacks.length;
             objeto.totalSacksDelivered = completed.length;
-          } else if(sacks.length === completed.length && !aplicatedInPlot){
+          } else if (sacks.length === completed.length && !aplicatedInPlot) {
             objeto.colorStatus = 'Blue';
 
             objeto.totalSacks = sacks.length;
             objeto.totalSacksDelivered = completed.length;
-          }else {
+          } else {
             objeto.colorStatus = 'Red';
           }
           objeto.sacks = completed;
@@ -164,8 +165,7 @@ colores ={
           this.infoSacks.push(objeto);
         });
         this.infoSacksCopy = this.infoSacks;
-      }
-      else {
+      } else {
         this.loading = true;
       }
     });
@@ -218,7 +218,7 @@ colores ={
 
   onFilterByIngenio() {
     this.infoSacksCopy = this.infoSacksCopy.filter(sack => {
-      if (sack.ingenioId === this.idIngenio ) { // borrar la ultima parte del || ya que solo es prueba
+      if (sack.ingenioId === this.idIngenio) { // borrar la ultima parte del || ya que solo es prueba
         return sack;
       }
     });

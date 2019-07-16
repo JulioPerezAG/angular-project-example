@@ -11,9 +11,6 @@
         <div fxLayout="column" fxLayoutAlign="space-evenly center" [formGroup]="form">
           <mat-form-field>
             <input matInput placeholder="Email" formControlName="email">
-            <mat-error *ngIf="form.controls.email?.errors?.signInErrors">
-              {{form.controls.email.errors.signInErrors}}
-            </mat-error>
             <mat-error *ngIf="form.controls.email?.errors?.email">
               El formato del correo es invalido
             </mat-error>
@@ -28,6 +25,9 @@
               La contraseña es necesaria
             </mat-error>
           </mat-form-field>
+          <mat-error *ngIf="form.errors?.signInErrors">
+            {{form.errors.signInErrors}}
+          </mat-error>
         </div>
       </mat-card-content>
       <mat-card-actions fxLayout="row" fxLayoutAlign="center center">

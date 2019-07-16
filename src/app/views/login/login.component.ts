@@ -5,8 +5,6 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner';
 
 import { select, Store } from '@ngrx/store';
 
-import { Observable } from 'rxjs';
-
 import { signIn } from '../../actions/login.actions';
 import { selectIsLoading, selectLoginErrors } from '../../selectors/login.selectors';
 
@@ -30,9 +28,10 @@ export class LoginComponent implements OnInit {
 
   constructor(formBuilder: FormBuilder, private store: Store<AppStateInterface>) {
     this.form = formBuilder.group({
-      email: ['', [Validators.required, Validators.email],
-        [StoreValidators.hasStoreErrors(this.store.pipe(select(selectLoginErrors)), 'signInErrors')]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
+    }, {
+      asyncValidators: [StoreValidators.hasStoreErrors(this.store.pipe(select(selectLoginErrors)), 'signInErrors')]
     });
   }
 
