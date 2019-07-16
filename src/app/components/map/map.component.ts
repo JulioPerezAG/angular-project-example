@@ -86,8 +86,8 @@ export class MapComponent implements OnInit {
      * a un almacenamiento local
      */
 
-    this.store.select(selectUserPlantId).subscribe(async (payload) => {
-      await this.store.dispatch(loadTerrains({payload}));
+    this.store.select(selectUserPlantId).subscribe((payload) => {
+      this.store.dispatch(loadTerrains({payload}));
     });
 
     this.store.select(getTerrains).subscribe(data => {

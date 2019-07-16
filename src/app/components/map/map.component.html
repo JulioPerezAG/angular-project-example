@@ -8,13 +8,14 @@
                       (change)="changeValue(filter, $event)">
           {{filter}}</mat-checkbox>
       </section>
-    
+
     </div>
   </div>
   <div class="map" #map>
     <agm-map id="map" [latitude]="lat" [longitude]="lng">
       <agm-marker *ngFor="let data of completedSacks; let i = index" [latitude]="data.latitude"
-                  [longitude]="data.longitude" [iconUrl]="colores['icon'+data.colorStatus]" (mouseOver)="onMouseOver(infoWindow, $event)"
+                  [longitude]="data.longitude" [iconUrl]="colores['icon'+data.colorStatus]"
+                  (mouseOver)="onMouseOver(infoWindow, $event)"
                   (mouseOut)="onMouseOut(infoWindow, $event)" (markerClick)="markerClick(data)">
         <agm-info-window [disableAutoPan]="true" #infoWindow>
           <div style="color:rgb(8, 85, 25);">
@@ -23,7 +24,8 @@
         </agm-info-window>
       </agm-marker>
       <agm-marker *ngFor="let data of incompletedSacks; let i = index" [latitude]="data.latitude"
-                  [longitude]="data.longitude" [iconUrl]="colores['icon'+data.colorStatus]" (mouseOver)="onMouseOver(infoWindow, $event)"
+                  [longitude]="data.longitude" [iconUrl]="colores['icon'+data.colorStatus]"
+                  (mouseOver)="onMouseOver(infoWindow, $event)"
                   (mouseOut)="onMouseOut(infoWindow, $event)" (markerClick)="markerClick(data)">
         <agm-info-window [disableAutoPan]="true" #infoWindow>
           <div style="color:rgb(133, 10, 10);">

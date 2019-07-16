@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Actions, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 
 import { Observable, of } from 'rxjs';
@@ -18,12 +18,13 @@ export class TerrainEffects {
   constructor(private mapService: MapService, private action$: Actions) {
   }
 
-  terrains$: Observable<Action> = this.action$.pipe(
-    ofType(loadTerrains),
-    mergeMap(({payload}) =>
-      this.mapService.getTerrainsByIdPlant(payload).pipe(
-        map((terrains: TerrainInterface[]) => loadTerrainSuccess({terrains})),
-        catchError(() => of(loadError({error: 'Ocurrio un error en la carga de parcelas'}))))
-    )
+  terrains$: Observable<Action> = createEffect(() =>
+    this.action$.pipe(
+      ofType(loadTerrains),
+      mergeMap(({payload}) =>
+        this.mapService.getTerrainsByIdPlant(payload).pipe(
+          map((terrains: TerrainInterface[]) => loadTerrainSuccess({terrains})),
+          catchError(() => of(loadError({error: 'Ocurrio un error en la carga de parcelas'}))))
+      ))
   );
 }

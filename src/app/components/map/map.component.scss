@@ -51,7 +51,7 @@ $primaryFont: 'Montserrat', sans-serif;
 
   .map {
     width: 80vw;
-    margin: auto;
+    margin: auto auto 0.5rem;
 
     agm-map {
       height: 400px;
