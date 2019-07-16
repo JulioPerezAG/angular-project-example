@@ -40,7 +40,7 @@ export class PlantEntityTableComponent {
   outputColumnDefinition: ColumnDefinitionInterface[] = [
     {displayedName: 'Id', propertyName: 'id'},
     {displayedName: 'Formula', propertyName: 'description'},
-    {displayedName: 'Usuario', propertyName: 'userId'}
+    {displayedName: 'Operador', propertyName: 'operator'}
   ];
 
   aplicatedColumnDefinition: ColumnDefinitionInterface[] = [
@@ -55,7 +55,7 @@ export class PlantEntityTableComponent {
     {displayedName: 'Formula', propertyName: 'description'}
   ];
 
-  intransitColumnDefiniton: ColumnDefinitionInterface[] = [
+  intransitColumnDefinition: ColumnDefinitionInterface[] = [
     {displayedName: 'Id', propertyName: 'id'},
     {displayedName: 'Formula', propertyName: 'description'},
     {displayedName: 'Ingenio Id', propertyName: 'ingenioId'},
@@ -70,7 +70,7 @@ export class PlantEntityTableComponent {
     outputs: this.outputColumnDefinition,
     aplicated: this.aplicatedColumnDefinition,
     inventory: this.inventoryColumnDefinition,
-    intransit: this.intransitColumnDefiniton
+    intransit: this.intransitColumnDefinition
   };
 
   constructor() {
