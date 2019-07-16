@@ -17,13 +17,13 @@ export class TerrainEffects {
   @Effect()
   terrains$: Observable<Action> = this.action$.pipe(
     ofType(fromTerrainsActions.TerrainActions.LOAD_TERRAINS),
-    mergeMap(action =>
-      this.mapService.getTerrains().pipe(
+    mergeMap((action: any) => {
+      return this.mapService.getTerrainsByIdPlant(action.payload).pipe(
         map((data: TerrainInterface[]) => {
           return new fromTerrainsActions.LoadTerrainSuccess(data);
         }),
         catchError(() => of(new fromTerrainsActions.LoadError('Ocurrio un error en la carga de parcelas')))
-      )
+      )}
     )
   );
 

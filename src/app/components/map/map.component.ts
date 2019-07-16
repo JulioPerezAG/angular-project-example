@@ -10,6 +10,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { LoadTerrains } from '../../actions/terrain.actions';
 import { getTerrains } from '../../selectors/terrains.selector';
 import { AppStateInterface } from '../../models/app-state.interface';
+import { selectUserPlantId } from 'src/app/selectors/user.selectors';
 
 @Component({
   selector: 'app-map',
@@ -80,23 +81,20 @@ colores ={
   infoClick: SackInformationInterface;
 
   ngOnInit() {
-    this.mapService.getIngenios().subscribe(data => {
-      this.listIngenios = data;
-      console.log(data);
-    });
     /**
      * Al iniciar el componente dispara una accion para cargar los datos del servicio
      * a un almacenamiento local
      */
-    this.store.dispatch(new LoadTerrains());
-    // this.pointsTerrains$ = this.store.select(getTerrains);
-    /**
-     * Se guarda la info y se suscribe uno para obtener la informacion
-     */
+
+    this.store.select(selectUserPlantId).subscribe(async (data)=> {
+      await this.store.dispatch(new LoadTerrains(data));
+    })
+
     this.store.select(getTerrains).subscribe(data => {
       // debugger;
 
       if (data.length != 0) {
+        console.log("getTerrenos: ",data)
         this.loading = false;
         // console.log("Terrenos: ", data);
         // Se genera un objeto bajo un modelo especifico que ayudara en la iteracion y muestreo de info en la vista

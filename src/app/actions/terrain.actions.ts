@@ -10,7 +10,7 @@ export enum TerrainActions {
 export class LoadTerrains implements Action {
   readonly type = TerrainActions.LOAD_TERRAINS;
 
-  constructor() {
+  constructor(public payload: string) {
   }
 }
 

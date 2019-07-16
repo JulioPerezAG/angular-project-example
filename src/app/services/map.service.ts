@@ -60,4 +60,8 @@ export class MapService {
     });
   }
 
+  getTerrainsByIdPlant(idIngenio: string): Observable<TerrainInterface[]>{
+    return this.http.get<TerrainInterface[]>(`${this.api}/sumagro-app/ingenio-parcela/${idIngenio}/parcela`);
+  }
+
 }
