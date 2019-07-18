@@ -4,11 +4,11 @@ import { TerrainInterface } from '../models/terrain.interface';
 
 export const LOAD_TERRAINS = '[TERRAIN] Load Terrains';
 
-export const LOAD_TERRAINS_SUCCESS = '[Terrain] Load Terrains Success';
+export const LOAD_TERRAINS_SUCCESS = '[TERRAIN] Load Terrains Success';
 
-export const LOAD_ERROR = '[Terrain] Load Error';
+export const LOAD_ERROR = '[TERRAIN] Load Error';
 
-export const CLEAR_ALL = '[Terrain] Clear All';
+export const CLEAR_ALL = '[TERRAIN] Clear All';
 
 export const loadTerrains = createAction(LOAD_TERRAINS, props<{ payload: string }>());
 

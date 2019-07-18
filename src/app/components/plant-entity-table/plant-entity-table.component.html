@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" style="margin-bottom: 1rem">
   <table mat-table [dataSource]="data">
     <ng-container [matColumnDef]="column.propertyName" *ngFor="let column of currentColumnDefinition">
       <th mat-header-cell *matHeaderCellDef> {{column.displayedName}} </th>
@@ -11,5 +11,6 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <mat-paginator *ngIf="pagination" [length]="pagination.length" [pageSize]="pagination.pageSize"
-                 [pageIndex]="pagination.pageIndex" (page)="onPageChange($event)" hidePageSize></mat-paginator>
+                 [pageIndex]="pagination.pageIndex" (page)="onPageChange($event)" hidePageSize>
+  </mat-paginator>
 </div>

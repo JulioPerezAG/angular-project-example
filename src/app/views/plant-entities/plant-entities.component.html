@@ -2,6 +2,9 @@
                         [plantType]="plantType | async" [pagination]="pagination | async"
                         (pageChange)="onPageChange($event)"></app-plant-entity-table>
 <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+<div class="carousel" fxLayout="row" fxLayoutAlign="start center" *ngIf="!(isLoading | async) && (data | async).length">
+  <app-formula *ngFor="let formula of formulas | async" [formula]="formula"></app-formula>
+</div>
 <mat-card *ngIf="!(isLoading | async) && !(data | async).length" style="text-align: center">
   <mat-icon>warning</mat-icon>
   <br>

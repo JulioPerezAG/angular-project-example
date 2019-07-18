@@ -8,6 +8,8 @@ import { PlantEntitiesComponent } from './plant-entities.component';
 import { PlantEntityTableModule } from '../../components/plant-entity-table/plant-entity-table.module';
 
 import { PlantService } from '../../services/plant.service';
+import { FlexModule } from '@angular/flex-layout';
+import { FormulaModule } from '../../components/formula/formula.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { PlantService } from '../../services/plant.service';
     CommonModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    FlexModule,
+    FormulaModule
   ],
   exports: [
     PlantEntitiesComponent

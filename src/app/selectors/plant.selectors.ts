@@ -11,3 +11,5 @@ export const selectPlantPagination = createSelector(selectPlant, s1 => s1.pagina
 export const selectPlantType = createSelector(selectPlant, s1 => s1.plantType);
 
 export const selectPlantEntities = plantEntityAdapter.getSelectors(selectPlant).selectAll;
+
+export const selectPlantFormulas = createSelector(selectPlant, s1 => s1.formulas);

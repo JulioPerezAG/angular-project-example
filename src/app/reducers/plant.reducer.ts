@@ -1,6 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { changePageSize, loadPlantEntities, loadPlantPagination, loadPlantType, nextPage, previousPage } from '../actions/plant.actions';
+import {
+  changePageSize,
+  loadPlantEntities,
+  loadPlantFormulas,
+  loadPlantPagination,
+  loadPlantType,
+  nextPage,
+  previousPage
+} from '../actions/plant.actions';
 
 import { plantEntityAdapter } from '../entity-adapters/plant-entity.adapter';
 
@@ -14,7 +22,8 @@ export const plantReducer = createReducer<PlantScreenInterface>(plantEntityAdapt
       pageIndex: 0,
       pageSize: 10,
       length: 0
-    }
+    },
+    formulas: []
   }),
   on(loadPlantType, (state, {plantType}) => ({
     ...state, plantType, pagination: {
@@ -51,4 +60,5 @@ export const plantReducer = createReducer<PlantScreenInterface>(plantEntityAdapt
       length: total
     }
   })),
-  on(loadPlantPagination, (state, {pagination}) => ({...state, pagination, loading: true})));
+  on(loadPlantPagination, (state, {pagination}) => ({...state, pagination, loading: true})),
+  on(loadPlantFormulas, ((state, {formulas}) => ({...state, formulas}))));

@@ -1,0 +1,3 @@
+<div fxLayout="row" fxLayoutAlign="space-around center" [formGroup]="form">
+  <mat-checkbox *ngFor="let filter of filters" [formGroupName]="filter.key">{{filter.label}}</mat-checkbox>
+</div>

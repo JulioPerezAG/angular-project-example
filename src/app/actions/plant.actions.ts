@@ -5,6 +5,7 @@ import { createAction, props } from '@ngrx/store';
 import { PlantEntityType } from '../models/plant-entity.type';
 import { PaginationInterface } from '../models/pagination.interface';
 import { PlantType } from '../models/plant.type';
+import { FormulaInterface } from '../models/formula.interface';
 
 export const LOAD_PLANT_TYPE = '[PLANT] Load Plant Type';
 
@@ -18,6 +19,8 @@ export const LOAD_PLANT_ENTITIES = '[PLANT] Load Plant Entities';
 
 export const LOAD_PLANT_PAGINATION = '[PLANT] Load Plant Pagination';
 
+export const LOAD_PLANT_FORMULAS = '[PLANT] Load Plant Formulas';
+
 export const loadPlantType = createAction(LOAD_PLANT_TYPE, props<{ plantType: PlantType }>());
 
 export const nextPage = createAction(NEXT_PAGE);
@@ -29,3 +32,5 @@ export const changePageSize = createAction(CHANGE_PAGE_SIZE, props<{ pageSize }>
 export const loadPlantEntities = createAction(LOAD_PLANT_ENTITIES, props<{ entities: PlantEntityType[], total: number }>());
 
 export const loadPlantPagination = createAction(LOAD_PLANT_PAGINATION, props<{ pagination: PaginationInterface | PageEvent }>());
+
+export const loadPlantFormulas = createAction(LOAD_PLANT_FORMULAS, props<{ formulas: FormulaInterface[] }>());

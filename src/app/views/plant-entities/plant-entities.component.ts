@@ -4,17 +4,27 @@ import { select, Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 
-import { selectPlantEntities, selectPlantPagination, selectPlantType, selectPlatLoading } from '../../selectors/plant.selectors';
+import {
+  selectPlantEntities,
+  selectPlantFormulas,
+  selectPlantPagination,
+  selectPlantType,
+  selectPlatLoading
+} from '../../selectors/plant.selectors';
 
 import { AppStateInterface } from '../../models/app-state.interface';
 import { PlantType } from '../../models/plant.type';
 import { PaginationInterface } from '../../models/pagination.interface';
 import { PageEvent } from '@angular/material';
 import { loadPlantPagination } from '../../actions/plant.actions';
+import { FormulaInterface } from '../../models/formula.interface';
 
 @Component({
   selector: 'app-plant-entities',
-  templateUrl: './plant-entities.component.html'
+  templateUrl: './plant-entities.component.html',
+  styleUrls: [
+    './plant-entities.component.scss'
+  ]
 })
 export class PlantEntitiesComponent implements OnInit {
 
@@ -26,6 +36,8 @@ export class PlantEntitiesComponent implements OnInit {
 
   pagination: Observable<PaginationInterface>;
 
+  formulas: Observable<FormulaInterface[]>;
+
   constructor(private store: Store<AppStateInterface>) {
   }
 
@@ -34,6 +46,7 @@ export class PlantEntitiesComponent implements OnInit {
     this.data = this.store.pipe(select(selectPlantEntities));
     this.isLoading = this.store.pipe(select(selectPlatLoading));
     this.pagination = this.store.pipe(select(selectPlantPagination));
+    this.formulas = this.store.pipe(select(selectPlantFormulas));
   }
 
   onPageChange(change: PageEvent) {
