@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "sumagro-plant-admin"
+    }
+  },
+  "defaultProject": "sumagro-plant-admin",
+  "cli": {
+    "analytics": "080a2b11-f641-4320-96b5-5c7edc3973ca"
+  }
 }
